@@ -2,7 +2,9 @@ import express, { Request, Response } from 'express';
 import redis from 'redis';
 
 const app = express();
-const client = redis.createClient();
+const client = redis.createClient({
+  host: 'redis-server'
+});
 
 client.set('visits', '0');
 
@@ -14,7 +16,6 @@ app.get('/', (req: Request, res: Response) => {
       client.set('visits', `${parseInt(visits) + 1}`);
     }
   });
-  res.send('');
 });
 
 app.listen('8080', () => console.log('App on port 8080'));
